@@ -1,11 +1,16 @@
 import { AppDataSource } from "../../data-source";
 import { Contact } from "../../entities";
+import { IContact } from "../../interfaces/contact.interfaces";
 
-const createContactService = async (contactData: any) => {
+const createContactService = async (
+  contactData: IContact,
+  clientId: number | undefined
+) => {
   const userRepository = AppDataSource.getRepository(Contact);
 
   const contact = userRepository.create({
     ...contactData,
+    client: clientId,
   });
 
   await userRepository.save(contact);

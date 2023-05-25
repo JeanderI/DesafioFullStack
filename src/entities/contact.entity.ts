@@ -27,7 +27,7 @@ class Contact {
 
   @ManyToOne(() => Client, (client) => client.contacts)
   @JoinColumn()
-  client: Client;
+  client: Client | number;
 }
 
 export { Contact };

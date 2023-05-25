@@ -3,12 +3,14 @@ import createContactService from "../services/contact/createContact.services";
 import listContactsService from "../services/contact/listContact.services";
 import updateContactService from "../services/contact/updateContact.services";
 import deleteClientService from "../services/client/deleteCliente.services";
+import { IContact } from "../interfaces/contact.interfaces";
 const createContactController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const contactData = req.body;
-  const newContact = await createContactService(contactData);
+  const clientId: number | undefined = req.user?.id;
+  const contactData: IContact = req.body;
+  const newContact = await createContactService(contactData, clientId);
   return res.status(201).json(newContact);
 };
 

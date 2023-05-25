@@ -5,11 +5,12 @@ import {
   listContactController,
   updateContactController,
 } from "../controllers/contact.controllers";
+import ensureTokenIsValidMiddleware from "../middlewares/ensureTokenIsValid.middleware";
 const contactRoutes: Router = Router();
 
-contactRoutes.post("", createContactController);
+contactRoutes.post("", ensureTokenIsValidMiddleware, createContactController);
 contactRoutes.get("", listContactController);
-contactRoutes.patch("", updateContactController);
-contactRoutes.delete("", deleteContactController);
+contactRoutes.patch("", ensureTokenIsValidMiddleware, updateContactController);
+contactRoutes.delete("", ensureTokenIsValidMiddleware, deleteContactController);
 
 export default contactRoutes;
