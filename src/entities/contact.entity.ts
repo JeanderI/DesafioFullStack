@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -15,11 +16,14 @@ class Contact {
   @Column({ type: "varchar" })
   fullName: string;
 
+  @Column({ type: "varchar", length: 45, unique: true })
+  email: string;
+
   @Column({ type: "integer" })
   telephone: number;
 
-  @Column({ type: "date" })
-  registrationDate: Date;
+  @CreateDateColumn({ type: "date" })
+  registrationDate: string;
 
   @ManyToOne(() => Client, (client) => client.contacts)
   @JoinColumn()
