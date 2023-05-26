@@ -1,3 +1,4 @@
+import { DeepPartial } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { Contact } from "../../entities";
 import { IContact } from "../../interfaces/contact.interfaces";
@@ -10,7 +11,7 @@ const createContactService = async (
 
   const contact = userRepository.create({
     ...contactData,
-    client: clientId,
+    client: clientId as DeepPartial<number>,
   });
 
   await userRepository.save(contact);

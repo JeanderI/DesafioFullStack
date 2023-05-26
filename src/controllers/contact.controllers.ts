@@ -8,7 +8,7 @@ const createContactController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const clientId: number | undefined = req.user?.id;
+  const clientId = req.user.id;
   const contactData: IContact = req.body;
   const newContact = await createContactService(contactData, clientId);
   return res.status(201).json(newContact);
