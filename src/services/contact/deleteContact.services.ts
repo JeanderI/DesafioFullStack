@@ -1,13 +1,16 @@
 import { AppDataSource } from "../../data-source";
 import { Contact } from "../../entities";
+import { AppError } from "../../errors";
 
-const deleteContactService = async (userId: number) => {
-  const userRepository = AppDataSource.getRepository(Contact);
-  const user = await userRepository.findOneBy({
-    id: userId,
-  });
+const deleteContactService = async (contactId: number) => {
+  const contactRepository = AppDataSource.getRepository(Contact);
+  const contact = await contactRepository.findOneBy({ id: contactId });
 
-  await userRepository.softRemove(user!);
+  if (!contact) {
+    throw new AppError("Contact not found", 404);
+  }
+
+  await contactRepository.remove(contact);
 };
 
 export default deleteContactService;

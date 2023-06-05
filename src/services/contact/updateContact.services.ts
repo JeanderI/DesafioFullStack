@@ -1,21 +1,26 @@
 import { AppDataSource } from "../../data-source";
 import { Contact } from "../../entities";
+import { IContactUpdateRequest } from "../../interfaces/contacts.interfaces";
+import { contactSchemaUpdate } from "../../schemas/contact.schemas";
 
-const updateContactService = async (userId: number, userData: any) => {
-  const userRespository = AppDataSource.getRepository(Contact);
+const updateContactService = async (
+  contactId: number,
+  contactData: IContactUpdateRequest
+) => {
+  const contactRespository = AppDataSource.getRepository(Contact);
 
-  const user = await userRespository.findOneBy({ id: userId });
+  const contact = await contactRespository.findOneBy({ id: contactId });
 
-  const updateUser = userRespository.create({
-    ...user,
-    ...userData,
+  const updateContact = contactRespository.create({
+    ...contact,
+    ...contactData,
   });
 
-  await userRespository.save(updateUser);
+  await contactRespository.save(updateContact);
 
-  /* const update = listUserSchema.parse(updateUser); */
+  const update = contactSchemaUpdate.parse(updateContact);
 
-  return updateUser;
+  return update;
 };
 
 export default updateContactService;

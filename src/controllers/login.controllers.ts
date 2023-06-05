@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import loginService from "../services/login/login.services";
+
 const loginController = async (
   req: Request,
   res: Response

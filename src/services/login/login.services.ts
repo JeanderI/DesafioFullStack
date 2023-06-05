@@ -3,11 +3,11 @@ import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { Client } from "../../entities";
 import { AppError } from "../../errors";
-/* import { Ilogin } from "../../interfaces/login.interfaces"; */
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import { ILoginRequest } from "../../interfaces/login.interfaces";
 
-const loginService = async (data: any) => {
+const loginService = async (data: ILoginRequest) => {
   const userRepository: Repository<Client> =
     AppDataSource.getRepository(Client);
 

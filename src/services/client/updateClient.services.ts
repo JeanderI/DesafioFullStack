@@ -1,21 +1,23 @@
 import { AppDataSource } from "../../data-source";
 import { Client } from "../../entities";
+import { IClientRequest } from "../../interfaces/clients.interfaces";
+import { clientSchemaResponse } from "../../schemas/clients.schema";
 
-const updateClientService = async (userId: number, userData: any) => {
-  const userRespository = AppDataSource.getRepository(Client);
+const updateClientService = async (clientData: IClientRequest) => {
+  const clientRespository = AppDataSource.getRepository(Client);
 
-  const user = await userRespository.findOneBy({ id: userId });
+  const client = await clientRespository.findOneBy({ email: clientData.email });
 
-  const updateUser = userRespository.create({
-    ...user,
-    ...userData,
+  const updateClient = clientRespository.create({
+    ...client,
+    ...clientData,
   });
 
-  await userRespository.save(updateUser);
+  await clientRespository.save(updateClient);
 
-  /* const update = listUserSchema.parse(updateUser); */
+  const updated = clientSchemaResponse.parse(updateClient);
 
-  return updateUser;
+  return updated;
 };
 
 export default updateClientService;

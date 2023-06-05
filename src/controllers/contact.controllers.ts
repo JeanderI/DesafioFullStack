@@ -3,7 +3,7 @@ import createContactService from "../services/contact/createContact.services";
 import listContactsService from "../services/contact/listContact.services";
 import updateContactService from "../services/contact/updateContact.services";
 import deleteClientService from "../services/client/deleteCliente.services";
-import { IContact } from "../interfaces/contact.interfaces";
+import { IContact } from "../interfaces/contacts.interfaces";
 const createContactController = async (
   req: Request,
   res: Response
@@ -18,7 +18,8 @@ const listContactController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const listContacts = await listContactsService();
+  const contactId = parseInt(req.params.id);
+  const listContacts = await listContactsService(contactId);
   return res.status(200).json(listContacts);
 };
 
@@ -36,7 +37,7 @@ const deleteContactController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const contactId = parseInt(req.params.id);
+  const contactId: number = parseInt(req.params.id);
   await deleteClientService(contactId);
   return res.status(204).json();
 };

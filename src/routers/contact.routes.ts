@@ -6,11 +6,30 @@ import {
   updateContactController,
 } from "../controllers/contact.controllers";
 import ensureTokenIsValidMiddleware from "../middlewares/ensureTokenIsValid.middleware";
+import { validateDataMiddleware } from "../middlewares/validateData.middleware";
+import { contactSchemaRequest } from "../schemas/contact.schemas";
+import verifyContactExists from "../middlewares/verifyCategoryExists.middleware";
 const contactRoutes: Router = Router();
 
-contactRoutes.post("", ensureTokenIsValidMiddleware, createContactController);
-contactRoutes.get("", listContactController);
-contactRoutes.patch("", ensureTokenIsValidMiddleware, updateContactController);
-contactRoutes.delete("", ensureTokenIsValidMiddleware, deleteContactController);
+contactRoutes.post(
+  "",
+  ensureTokenIsValidMiddleware,
+  validateDataMiddleware(contactSchemaRequest),
+  createContactController
+);
+contactRoutes.get("/:id", listContactController);
+contactRoutes.patch(
+  "/:id",
+  ensureTokenIsValidMiddleware,
+  verifyContactExists,
+  validateDataMiddleware(contactSchemaRequest),
+  updateContactController
+);
+contactRoutes.delete(
+  "/:id",
+  ensureTokenIsValidMiddleware,
+  verifyContactExists,
+  deleteContactController
+);
 
 export default contactRoutes;

@@ -1,16 +1,29 @@
 import { AppDataSource } from "../../data-source";
 import { Client } from "../../entities";
+import { AppError } from "../../errors";
+import { IClientRequest } from "../../interfaces/clients.interfaces";
+import { clientSchemaResponse } from "../../schemas/clients.schema";
 
-const createClientService = async (clientData: any) => {
-  const userRepository = AppDataSource.getRepository(Client);
+const createClientService = async (clientData: IClientRequest) => {
+  const clientRepository = AppDataSource.getRepository(Client);
 
-  const newUser = userRepository.create({
+  const findClient = await clientRepository.findOneBy({
+    email: clientData.email,
+  });
+
+  if (findClient) {
+    throw new AppError("Email already exists", 409);
+  }
+
+  const newClient = clientRepository.create({
     ...clientData,
   });
 
-  await userRepository.save(newUser);
+  await clientRepository.save(newClient);
 
-  return newUser;
+  const client = clientSchemaResponse.parse(newClient);
+
+  return client;
 };
 
 export default createClientService;

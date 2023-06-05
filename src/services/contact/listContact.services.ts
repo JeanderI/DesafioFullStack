@@ -1,12 +1,27 @@
 import { AppDataSource } from "../../data-source";
-import { Contact } from "../../entities";
+import { Client, Contact } from "../../entities";
+import { AppError } from "../../errors";
 
-const listContactsService = async () => {
+const listContactsService = async (clientId: number) => {
   const contactRespository = AppDataSource.getRepository(Contact);
 
-  const contactList = await contactRespository.find();
+  const clientRepository = AppDataSource.getRepository(Client);
 
-  return contactList;
+  const client: Client | null = await clientRepository.findOneBy({
+    id: clientId,
+  });
+
+  if (!client) {
+    throw new AppError("Client not found", 404);
+  }
+
+  const contacts: Contact[] = await contactRespository.find({
+    where: {
+      client: client,
+    },
+  });
+
+  return contacts;
 };
 
 export default listContactsService;

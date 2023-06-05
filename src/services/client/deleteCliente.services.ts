@@ -1,13 +1,13 @@
 import { AppDataSource } from "../../data-source";
 import { Client } from "../../entities";
 
-const deleteClientService = async (userId: number) => {
+const deleteClientService = async (clientId: number) => {
   const userRepository = AppDataSource.getRepository(Client);
-  const user = await userRepository.findOneBy({
-    id: userId,
+  const client = await userRepository.findOneBy({
+    id: clientId,
   });
 
-  await userRepository.softRemove(user!);
+  await userRepository.remove(client!);
 };
 
 export default deleteClientService;

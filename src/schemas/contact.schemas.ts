@@ -1,5 +1,5 @@
 import { z } from "zod";
-const createContactSchema = z.object({
+const contactSchema = z.object({
   id: z.number().int(),
   fullName: z.string().min(2).max(45),
   email: z.string().email(),
@@ -8,4 +8,25 @@ const createContactSchema = z.object({
   client: z.number(),
 });
 
-export { createContactSchema };
+const contactSchemaRequest = contactSchema.omit({
+  id: true,
+  registrationDate: true,
+  client: true,
+});
+
+const contactSchemaResponse = z.array(contactSchema);
+
+const contactSchemaUpdate = contactSchema
+  .omit({
+    id: true,
+    registrationDate: true,
+    client: true,
+  })
+  .partial();
+
+export {
+  contactSchema,
+  contactSchemaRequest,
+  contactSchemaResponse,
+  contactSchemaUpdate,
+};

@@ -24,9 +24,8 @@ const updateClientController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const clientId = parseInt(req.params.id);
   const clientData = req.body;
-  const clientUpdate = await updateClientService(clientId, clientData);
+  const clientUpdate = await updateClientService(clientData);
   return res.status(200).json(clientUpdate);
 };
 

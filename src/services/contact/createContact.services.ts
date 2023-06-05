@@ -1,20 +1,28 @@
-import { DeepPartial } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { Contact } from "../../entities";
-import { IContact } from "../../interfaces/contact.interfaces";
+import { IContactRequest } from "../../interfaces/contacts.interfaces";
+import { AppError } from "../../errors";
 
 const createContactService = async (
-  contactData: IContact,
-  clientId: number | undefined
+  contactData: IContactRequest,
+  clientId: number
 ) => {
-  const userRepository = AppDataSource.getRepository(Contact);
+  const contactRepository = AppDataSource.getRepository(Contact);
 
-  const contact = userRepository.create({
-    ...contactData,
-    client: clientId as DeepPartial<number>,
+  const findUser = await contactRepository.findOneBy({
+    email: contactData.email,
   });
 
-  await userRepository.save(contact);
+  if (findUser) {
+    throw new AppError("Email already exists", 409);
+  }
+
+  const contact = contactRepository.create({
+    ...contactData,
+    client: clientId,
+  });
+
+  await contactRepository.save(contact);
 
   return contact;
 };
