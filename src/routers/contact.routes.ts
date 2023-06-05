@@ -5,10 +5,10 @@ import {
   listContactController,
   updateContactController,
 } from "../controllers/contact.controllers";
-import ensureTokenIsValidMiddleware from "../middlewares/ensureTokenIsValid.middleware";
 import { validateDataMiddleware } from "../middlewares/validateData.middleware";
 import { contactSchemaRequest } from "../schemas/contact.schemas";
 import verifyContactExists from "../middlewares/verifyCategoryExists.middleware";
+import { ensureTokenIsValidMiddleware } from "../middlewares/ensureTokenIsValid.middleware";
 const contactRoutes: Router = Router();
 
 contactRoutes.post(

@@ -34,7 +34,6 @@ const dataSourceConfig = (): DataSourceOptions => {
     logging: true,
     migrations: [migrationsPath],
     entities: [entitiesPath],
-    ssl: true,
   };
 };
 

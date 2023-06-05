@@ -8,25 +8,31 @@ const ensureTokenIsValidMiddleware = (
   res: Response,
   next: NextFunction
 ): Response | void => {
-  let token = req.headers.authorization;
+  const token = req.headers.authorization;
 
   if (!token) {
-    throw new AppError("Missing bearer token", 401);
+    return res.status(401).json({
+      message: "invalid token",
+    });
   }
 
-  token = token.split(" ")[1];
+  const splitToken = token.split(" ")[1];
 
-  jwt.verify(token, process.env.SECRET_KEY!, (error, decoded: any) => {
-    if (error) {
-      throw new AppError(error.message, 401);
+  jwt.verify(
+    splitToken,
+    process.env.SECRET_KEY!,
+    (error: any, decoded: any) => {
+      if (error) {
+        return res.status(401).json({
+          message: "invalid token",
+        });
+      }
+
+      res.locals.userId = decoded.sub;
+
+      return next();
     }
-
-    req.user = {
-      id: Number(decoded.sub),
-    };
-
-    return next();
-  });
+  );
 };
 
-export default ensureTokenIsValidMiddleware;
+export { ensureTokenIsValidMiddleware };

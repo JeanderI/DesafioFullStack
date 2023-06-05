@@ -10,7 +10,8 @@ import {
   clientSchemaRequest,
   clientSchemaResponse,
 } from "../schemas/clients.schema";
-import ensureTokenIsValidMiddleware from "../middlewares/ensureTokenIsValid.middleware";
+import { ensureTokenIsValidMiddleware } from "../middlewares/ensureTokenIsValid.middleware";
+
 const clientRoutes: Router = Router();
 
 clientRoutes.post(
