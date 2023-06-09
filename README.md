@@ -4,7 +4,7 @@ Projeto Full Stack
 Este é o repositório para um projeto Full Stack, que inclui a parte de front-end e back-end. Aqui estão os passos para inicialização do projeto.
 
 Front-end
-O repositório do front-end pode ser encontrado aqui https://github.com/JeanderI/Tech-fullStack
+O repositório do front-end pode ser encontrado aqui https://github.com/JeanderI/DesafioFullStack-front
 
 Requisitos
 Certifique-se de ter os seguintes requisitos instalados antes de prosseguir:
