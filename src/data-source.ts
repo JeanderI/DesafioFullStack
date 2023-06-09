@@ -2,6 +2,7 @@ import "dotenv/config";
 import "reflect-metadata";
 import { DataSource, DataSourceOptions } from "typeorm";
 import path from "path";
+import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
 const dataSourceConfig = (): DataSourceOptions => {
   const entitiesPath: string = path.join(__dirname, "./entities/**.{ts,js}");
@@ -34,7 +35,7 @@ const dataSourceConfig = (): DataSourceOptions => {
     logging: true,
     migrations: [migrationsPath],
     entities: [entitiesPath],
-  };
+  } as PostgresConnectionOptions;
 };
 
 const AppDataSource = new DataSource(dataSourceConfig());
