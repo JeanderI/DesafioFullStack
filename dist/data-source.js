@@ -15,15 +15,6 @@ const dataSourceConfig = () => {
     if (!dbUrl) {
         throw new Error("Env var DATABASE_URL does not exists");
     }
-    const nodeEnv = process.env.NODE_ENV;
-    if (nodeEnv === "test") {
-        return {
-            type: "sqlite",
-            database: ":memory:",
-            synchronize: true,
-            entities: [entitiesPath],
-        };
-    }
     return {
         type: "postgres",
         url: dbUrl,
@@ -31,6 +22,7 @@ const dataSourceConfig = () => {
         logging: true,
         migrations: [migrationsPath],
         entities: [entitiesPath],
+        ssl: false,
     };
 };
 const AppDataSource = new typeorm_1.DataSource(dataSourceConfig());

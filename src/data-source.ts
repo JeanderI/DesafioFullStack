@@ -24,7 +24,6 @@ const dataSourceConfig = (): DataSourceOptions => {
     logging: true,
     migrations: [migrationsPath],
     entities: [entitiesPath],
-    ssl: false,
   } as PostgresConnectionOptions;
 };
 
