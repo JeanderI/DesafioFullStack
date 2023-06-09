@@ -2,13 +2,13 @@ import { Router } from "express";
 import {
   createClientController,
   deleteClientController,
-  listClientsController,
+  listClientController,
   updateClientController,
 } from "../controllers/client.controllers";
 import { validateDataMiddleware } from "../middlewares/validateData.middleware";
 import {
   clientSchemaRequest,
-  clientSchemaResponse,
+  clientSchemaUpdate,
 } from "../schemas/clients.schema";
 import { ensureTokenIsValidMiddleware } from "../middlewares/ensureTokenIsValid.middleware";
 
@@ -19,17 +19,13 @@ clientRoutes.post(
   validateDataMiddleware(clientSchemaRequest),
   createClientController
 );
-clientRoutes.get("", ensureTokenIsValidMiddleware, listClientsController);
+clientRoutes.get("", ensureTokenIsValidMiddleware, listClientController);
 clientRoutes.patch(
   "",
   ensureTokenIsValidMiddleware,
-  validateDataMiddleware(clientSchemaRequest),
+  validateDataMiddleware(clientSchemaUpdate),
   updateClientController
 );
-clientRoutes.delete(
-  "/:id",
-  ensureTokenIsValidMiddleware,
-  deleteClientController
-);
+clientRoutes.delete("", ensureTokenIsValidMiddleware, deleteClientController);
 
 export default clientRoutes;

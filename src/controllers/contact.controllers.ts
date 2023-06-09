@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import createContactService from "../services/contact/createContact.services";
-import listContactsService from "../services/contact/listContact.services";
+
 import updateContactService from "../services/contact/updateContact.services";
-import deleteClientService from "../services/client/deleteCliente.services";
 import { IContact } from "../interfaces/contacts.interfaces";
+import listContactService from "../services/contact/listContact.services";
+import deleteContactService from "../services/contact/deleteContact.services";
 const createContactController = async (
   req: Request,
   res: Response
@@ -19,7 +20,7 @@ const listContactController = async (
   res: Response
 ): Promise<Response> => {
   const contactId = parseInt(req.params.id);
-  const listContacts = await listContactsService(contactId);
+  const listContacts = await listContactService(contactId);
   return res.status(200).json(listContacts);
 };
 
@@ -38,7 +39,7 @@ const deleteContactController = async (
   res: Response
 ): Promise<Response> => {
   const contactId: number = parseInt(req.params.id);
-  await deleteClientService(contactId);
+  await deleteContactService(contactId);
   return res.status(204).json();
 };
 

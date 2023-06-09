@@ -6,8 +6,10 @@ const deleteClientService = async (clientId: number) => {
   const client = await userRepository.findOneBy({
     id: clientId,
   });
-
-  await userRepository.remove(client!);
+  if (!client) {
+    throw new Error("Client not found");
+  }
+  await userRepository.remove(client);
 };
 
 export default deleteClientService;

@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 const contactSchema = z.object({
   id: z.number().int(),
   fullName: z.string().min(2).max(45),
@@ -14,7 +15,9 @@ const contactSchemaRequest = contactSchema.omit({
   client: true,
 });
 
-const contactSchemaResponse = z.array(contactSchema);
+const contactSchemaResponse = contactSchema.omit({
+  registrationDate: true,
+});
 
 const contactSchemaUpdate = contactSchema
   .omit({

@@ -26,8 +26,7 @@ class Contact {
   registrationDate: string;
 
   @ManyToOne(() => Client, (client) => client.contacts, { onDelete: "CASCADE" })
-  @JoinColumn()
-  client: Client | number;
+  client: Client;
 }
 
 export { Contact };

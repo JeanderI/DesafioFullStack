@@ -7,7 +7,7 @@ import {
 } from "../controllers/contact.controllers";
 import { validateDataMiddleware } from "../middlewares/validateData.middleware";
 import { contactSchemaRequest } from "../schemas/contact.schemas";
-import verifyContactExists from "../middlewares/verifyCategoryExists.middleware";
+import verifyContactExists from "../middlewares/verifyContactExists.middleware";
 import { ensureTokenIsValidMiddleware } from "../middlewares/ensureTokenIsValid.middleware";
 const contactRoutes: Router = Router();
 
@@ -17,7 +17,7 @@ contactRoutes.post(
   validateDataMiddleware(contactSchemaRequest),
   createContactController
 );
-contactRoutes.get("/:id", listContactController);
+contactRoutes.get("/:id", verifyContactExists, listContactController);
 contactRoutes.patch(
   "/:id",
   ensureTokenIsValidMiddleware,

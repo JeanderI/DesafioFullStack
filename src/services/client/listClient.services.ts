@@ -1,12 +1,18 @@
 import { AppDataSource } from "../../data-source";
 import { Client } from "../../entities";
+import { clientListSchemaResponse } from "../../schemas/clients.schema";
 
-const listClientsService = async () => {
+const listClientService = async (clientId: number) => {
   const clientRespository = AppDataSource.getRepository(Client);
 
-  const clientList = await clientRespository.find();
-
-  return clientList;
+  const findClient = await clientRespository.find({
+    where: {
+      id: clientId,
+    },
+    relations: ["contacts"],
+  });
+  const client = clientListSchemaResponse.parse(findClient);
+  return client;
 };
 
-export default listClientsService;
+export default listClientService;
