@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "typeorm": "typeorm-ts-node-commonjs",
+    "build": "tsc"
   },
   "dependencies": {
     "@types/typescript": "^2.0.0",
